@@ -68,10 +68,11 @@ def predict_html():
 
     if response:
         pred = "The customer is likely to churn"
-    elif not response:
-        pred = "He is a loyal customer"
+    elif to_predict == np.zeros(5).reshape(1, 5):
+        pred = "Please enter values"
     else:
-        pred = 'Please enter values'
+        pred = "He is a loyal customer"
+
     try:
         return render_template('predict.html', predictions=pred, inputs=to_predict)
     except Exception as e:
