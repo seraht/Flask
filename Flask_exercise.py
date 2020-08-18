@@ -56,8 +56,8 @@ def predict_multiple():
 
     return make_response(jsonify(responses))
 
-@app.route('/p')
-def predict2():
+@app.route('/predict_html')
+def predict_html():
     to_predict = np.zeros(5).reshape(1, 5)
     features = ['is_male', 'num_interactions_with_cust_service', 'late_on_payment', 'age', 'years_in_contract']
     for i, feat in enumerate(features):
@@ -68,10 +68,12 @@ def predict2():
 
     if response:
         pred = "The customer is likely to churn"
-    else:
+    elif not response:
         pred = "He is a loyal customer"
+    else:
+        pred = 'Please enter values'
     try:
-        return render_template('predict.html', predictions=pred)
+        return render_template('predict.html', predictions=pred, inputs=to_predict)
     except Exception as e:
         return str(e)
 
