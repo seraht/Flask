@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 from flask import Flask
 import os
-import sklearn
 from flask import request
 from flask import jsonify, make_response
 

@@ -1,1 +1,1 @@
-web: python Flask_exercise.py
+web: gunicorn Flask_exercise:app
