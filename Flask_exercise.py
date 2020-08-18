@@ -68,7 +68,7 @@ def predict_html():
 
     if response:
         pred = "The customer is likely to churn"
-    elif to_predict == np.zeros(5).reshape(1, 5):
+    elif np.allclose(to_predict, np.zeros(5).reshape(1, 5)):
         pred = "Please enter values to the path"
     else:
         pred = "He is a loyal customer"
