@@ -8,7 +8,7 @@ Author: Serah
 
 import numpy as np
 import pandas as pd
-from flask import Flask
+from flask import Flask, render_template
 import os
 from flask import request
 from flask import jsonify, make_response
@@ -35,9 +35,12 @@ def predict():
     response = clf2.predict(to_predict)
 
     if response:
-        return "The customer is likely to churn"
+        predictions = "The customer is likely to churn"
     else:
-        return "He is a loyal customer"
+        predictions = "He is a loyal customer"
+    return render_template('predictor.html',
+                                     input=to_predict,
+                                     output=predictions)
 
 
 @app.route('/predict_multiple', methods=['GET', 'POST'])
