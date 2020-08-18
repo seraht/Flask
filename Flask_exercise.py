@@ -9,6 +9,7 @@ Author: Serah
 import numpy as np
 import pandas as pd
 from flask import Flask
+import os
 import sklearn
 from flask import request
 from flask import jsonify, make_response
@@ -56,5 +57,9 @@ def predict_multiple():
 
     return make_response(jsonify(responses))
 
-
-app.run()
+if __name__ == '__main__':
+    port = os.environ.get('PORT')
+    if port:
+        app.run(host='0.0.0.0', port=int(port))
+    else:
+        app.run()
