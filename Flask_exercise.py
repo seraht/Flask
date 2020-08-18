@@ -18,9 +18,29 @@ clf2 = pd.read_pickle("model.pkl")
 app = Flask(__name__)
 
 
-@app.route('/')
-def main_page():
-    return 'API for CHURNED predictions'
+@app.route('/',methods=['GET', 'POST'])
+def main():
+    if request.method == 'GET':
+        return render_template('main.html')
+
+    if request.method == 'POST':
+        is_male =  request.form['is_male']
+        num_interactions_with_cust_service =  request.form['num_interactions_with_cust_service']
+        late_on_payment =  request.form['late_on_payment']
+        age =  request.form['age']
+        years_in_contract =  request.form['years_in_contract']
+        input_variables = pd.DataFrame([['is_male', 'num_interactions_with_cust_service', 'late_on_payment', 'age', 'years_in_contract']],
+columns=['is_male', 'num_interactions_with_cust_service', 'late_on_payment', 'age', 'years_in_contract'], dtype=float)
+
+
+        # Predicting the Wine Quality using the loaded model
+        prediction = clf2.predict(input_variables)[0]
+        if prediction:
+            pred = "The customer is likely to churn"
+        else:
+            pred = "He is a loyal customer"
+        return render_template('main.html', result=pred)
+
 
 
 @app.route('/predict')
@@ -35,12 +55,9 @@ def predict():
     response = clf2.predict(to_predict)
 
     if response:
-        predictions = "The customer is likely to churn"
+        return "The customer is likely to churn"
     else:
-        predictions = "He is a loyal customer"
-    return render_template('predictor.html',
-                                     input=to_predict,
-                                     output=predictions)
+        return "He is a loyal customer"
 
 
 @app.route('/predict_multiple', methods=['GET', 'POST'])
