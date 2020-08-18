@@ -71,7 +71,7 @@ def predict2():
     else:
         pred = "He is a loyal customer"
     try:
-        return render_template('predict.html', something=pred)
+        return render_template('predict.html', predictions=pred)
     except Exception as e:
         return str(e)
 
